@@ -32,6 +32,7 @@ class Config(BaseSettings):
         env_file = ".env"
         env_file_encoding = "utf-8"
         case_sensitive = False
+        extra = "ignore"  # Allow extra environment variables
 
     @validator("signal_phone_number")
     def validate_phone_number(cls, v):
