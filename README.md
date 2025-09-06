@@ -77,7 +77,40 @@ cd comm-mcps
    ```
 
 4. **Use with Claude Code MCP:**
-   Copy `.mcp.json` to your project and the tools will be available in Claude Code.
+   ```bash
+   # Step 1: Install the package globally
+   pip install git+https://github.com/luxiaolei/comm-mcps.git
+   
+   # Step 2: Create .env with your credentials in your project
+   cd your-project-directory
+   cat > .env << EOF
+   RESEND_API_KEY=your_key
+   TELEGRAM_BOT_TOKEN=your_token
+   TELEGRAM_CHAT_ID=your_chat_id
+   SIGNAL_PHONE_NUMBER=your_number
+   EOF
+   
+   # Step 3: Create MCP configuration in your project
+   cat > .mcp.json << EOF
+   {
+     "mcpServers": {
+       "communications": {
+         "command": "python3",
+         "args": ["-m", "comm_mcps.server"]
+       }
+     }
+   }
+   EOF
+   
+   # Step 4: Start Claude Code
+   claude  # Communications tools will be available
+   ```
+
+   **Why this works:**
+   - ✅ `pip install` makes `comm_mcps` globally available
+   - ✅ `python3 -m comm_mcps.server` finds the installed package
+   - ✅ `.env` in working directory is automatically loaded
+   - ✅ No hardcoded paths - works on any computer
 
 ## Available Tools
 

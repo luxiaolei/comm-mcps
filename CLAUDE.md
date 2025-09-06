@@ -81,18 +81,34 @@ print(f'Signal: {config.is_signal_configured()}')
 
 **Add to Claude Code Projects**:
 ```bash
-# Copy MCP configuration to any project
-cp .mcp.json /path/to/your/project/
+# Step 1: Install package globally
+pip install git+https://github.com/luxiaolei/comm-mcps.git
 
-# Use with Claude Code
-cd /path/to/your/project
+# Step 2: Create .env in your project
+cd your-project
+cp /path/to/comm_mcps/.env.example .env
+# Edit .env with your credentials
+
+# Step 3: Create MCP configuration
+cat > .mcp.json << EOF
+{
+  "mcpServers": {
+    "communications": {
+      "command": "python3",
+      "args": ["-m", "comm_mcps.server"]
+    }
+  }
+}
+EOF
+
+# Step 4: Use with Claude Code
 claude  # Communications tools will be available
 ```
 
 **MCP Configuration** (`.mcp.json`):
-- Uses `uv run python3 -m comm_mcps.server` as command
-- Sets `PYTHONPATH` to include source directory
-- Project-scoped for easy integration
+- Uses `python3 -m comm_mcps.server` (works after pip install)
+- No hardcoded paths - environment agnostic
+- Loads `.env` from working directory automatically
 
 ## Service Configuration
 

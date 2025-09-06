@@ -1,12 +1,8 @@
 {
   "mcpServers": {
     "communications": {
-      "command": "uv",
-      "args": ["run", "python3", "-m", "comm_mcps.server"],
-      "cwd": "/home/trader/comm_mcps",
-      "env": {
-        "PYTHONPATH": "/home/trader/comm_mcps/src"
-      }
+      "command": "python3",
+      "args": ["-m", "comm_mcps.server"]
     }
   }
 }
