@@ -1,0 +1,1 @@
+"""Communication tools for the MCP server."""

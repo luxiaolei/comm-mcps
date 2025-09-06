@@ -1,0 +1,45 @@
+[project]
+name = "comm-mcps"
+dynamic = ["version"]
+description = "Communications MCP server with email, Telegram, and Signal tools"
+authors = [{ name = "Communications MCP" }]
+dependencies = [
+    "fastmcp>=0.2.0",
+    "httpx>=0.28.1",
+    "python-dotenv>=1.1.0",
+    "pydantic>=2.0.0",
+    "pydantic-settings>=2.0.0",
+    "typer>=0.15.2",
+    "rich>=13.9.4",
+    "resend>=2.0.0",
+    "telethon>=1.36.0",
+]
+requires-python = ">=3.10"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "pre-commit>=3.0.0",
+    "ruff>=0.1.0"
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "src/comm_mcps/__init__.py"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.ruff]
+select = ["E", "F", "I", "N", "W", "UP"]
+ignore = ["E501"]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.per-file-ignores]
+"tests/*" = ["S101"]
