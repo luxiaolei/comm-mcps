@@ -1,8 +1,22 @@
 [project]
 name = "comm-mcps"
 dynamic = ["version"]
-description = "Communications MCP server with email, Telegram, and Signal tools"
-authors = [{ name = "Communications MCP" }]
+description = "Communications MCP server with email, Telegram, and Signal tools for Claude Code"
+authors = [{ name = "Xiaolei Lu", email = "26442779@qq.com" }]
+readme = "README.md"
+license = { text = "MIT" }
+keywords = ["mcp", "claude", "communications", "email", "telegram", "signal"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Communications",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
 dependencies = [
     "fastmcp>=0.2.0",
     "httpx>=0.28.1",
@@ -15,6 +29,15 @@ dependencies = [
     "telethon>=1.36.0",
 ]
 requires-python = ">=3.10"
+
+[project.urls]
+Homepage = "https://github.com/luxiaolei/comm-mcps"
+Repository = "https://github.com/luxiaolei/comm-mcps"
+Issues = "https://github.com/luxiaolei/comm-mcps/issues"
+
+[project.scripts]
+comm-mcps = "comm_mcps.server:main"
+comm-mcps-cli = "comm_mcps.cli:app"
 
 [project.optional-dependencies]
 dev = [

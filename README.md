@@ -11,32 +11,73 @@ A comprehensive Model Context Protocol (MCP) server that provides email, Telegra
 - **🔒 Type Safety** - Full type hints and validation
 - **⏱️ Timeout Handling** - Configurable timeouts (default: 3 minutes)
 
+## Installation
+
+### Method 1: Install from GitHub (Recommended)
+```bash
+pip install git+https://github.com/luxiaolei/comm-mcps.git
+```
+
+### Method 2: Install from PyPI
+```bash
+pip install comm-mcps
+```
+
+### Method 3: Development Setup
+```bash
+git clone https://github.com/luxiaolei/comm-mcps.git
+cd comm-mcps
+./setup.sh
+```
+
 ## Quick Start
 
-1. **Clone and setup:**
+1. **Create environment configuration:**
    ```bash
-   git clone <your-repo>
-   cd comm_mcps
-   ./setup.sh
-   ```
-
-2. **Configure services in `.env`:**
-   ```bash
+   # Create .env file with your credentials
+   cat > .env << EOF
    # Email (Resend)
    RESEND_API_KEY=your_resend_api_key
-   FROM_EMAIL=your-email@domain.com
+   FROM_EMAIL=noreply@resend.dev
    
    # Telegram
    TELEGRAM_BOT_TOKEN=your_bot_token
    TELEGRAM_API_ID=your_api_id
    TELEGRAM_API_HASH=your_api_hash
+   TELEGRAM_CHAT_ID=your_chat_id
    
    # Signal
    SIGNAL_PHONE_NUMBER=+1234567890
+   SIGNAL_CLI_PATH=signal-cli
+   EOF
    ```
 
-3. **Add to Claude Code:**
-   Copy `claude_mcp_config.json` contents to your Claude Code MCP settings.
+2. **Use as CLI:**
+   ```bash
+   # Check status
+   comm-mcps-cli status
+   
+   # Send email
+   comm-mcps-cli email "Alert" "Your message"
+   
+   # Send Telegram (bidirectional)
+   comm-mcps-cli telegram "Hello" --reply --timeout 60
+   
+   # Send Signal (bidirectional)
+   comm-mcps-cli signal "Hello" "+1234567890" --reply
+   ```
+
+3. **Use as Python library:**
+   ```python
+   import asyncio
+   from comm_mcps.tools.email import send_email
+   
+   # Send notification
+   result = asyncio.run(send_email("user@example.com", "Alert", "Message"))
+   ```
+
+4. **Use with Claude Code MCP:**
+   Copy `.mcp.json` to your project and the tools will be available in Claude Code.
 
 ## Available Tools
 
@@ -47,7 +88,7 @@ Send emails via Resend API (one-way notifications only).
 
 **Features:**
 - Uses `noreply@resend.dev` as sender (hardcoded)
-- Default recipient: `26442779@qq.com`
+- Configurable default recipient via environment
 - Returns simple status: "Email sent to {recipient}" or "Email failed: {error}"
 
 ```json
@@ -56,7 +97,7 @@ Send emails via Resend API (one-way notifications only).
   "args": {
     "subject": "Trading Alert",
     "body": "Your notification message",
-    "to": "26442779@qq.com",
+    "to": "recipient@example.com",
     "html_body": "<h1>Optional HTML</h1>"
   }
 }
@@ -71,7 +112,7 @@ Unified bidirectional Telegram messaging with 1-second polling.
 - Uses `TELEGRAM_CHAT_ID` from environment (not argument)
 - Send messages and optionally wait for replies
 - 1-second polling when `expected_reply=True`
-- Bot: @cctrading01_bot
+- Configure your own Telegram bot
 
 ```json
 {
@@ -92,7 +133,7 @@ Unified bidirectional Signal messaging with 1-second polling.
 **Features:**
 - Send to any phone number or group ID
 - Wait for replies with 1-second polling
-- Uses `+85257833828` as sender (from environment)
+- Uses your configured phone number as sender
 - Secure end-to-end encryption
 
 ```json
@@ -100,7 +141,7 @@ Unified bidirectional Signal messaging with 1-second polling.
   "tool": "signal_tool",
   "args": {
     "message": "Hello via Signal!",
-    "recipient": "+8618611342177",
+    "recipient": "+1234567890",
     "expected_reply": true,
     "timeout": 180.0
   }

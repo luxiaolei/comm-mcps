@@ -56,7 +56,7 @@ import asyncio; print(asyncio.run(telegram_send_with_reply('test', False)))
 # Test Signal functionality
 uv run python3 -c "
 from src.comm_mcps.tools.signal_unified import signal_send_with_reply
-import asyncio; print(asyncio.run(signal_send_with_reply('test', '+8618611342177', False)))
+import asyncio; print(asyncio.run(signal_send_with_reply('test', '+1234567890', False)))
 "
 ```
 
@@ -99,16 +99,16 @@ claude  # Communications tools will be available
 **Email (Resend API)**:
 - API Key: Set `RESEND_API_KEY` in `.env`
 - Sender: Hardcoded to `noreply@resend.dev`
-- Default recipient: `26442779@qq.com`
+- Default recipient: Configure in environment
 
 **Telegram (Bot API)**:
 - Bot Token: `TELEGRAM_BOT_TOKEN` 
 - API Credentials: `TELEGRAM_API_ID`, `TELEGRAM_API_HASH`
-- Chat ID: `TELEGRAM_CHAT_ID=1221893362` (fixed recipient)
-- Bot: @cctrading01_bot
+- Chat ID: `TELEGRAM_CHAT_ID` (configure your target chat)
+- Create your own bot via @BotFather
 
 **Signal (CLI Wrapper)**:
-- Phone Number: `SIGNAL_PHONE_NUMBER=+85257833828`
+- Phone Number: `SIGNAL_PHONE_NUMBER` (your registered number)
 - CLI Path: `SIGNAL_CLI_PATH=signal-cli`
 - Requires Java runtime and signal-cli installation
 
@@ -118,7 +118,7 @@ All tools follow unified patterns with `expected_reply` and `timeout` parameters
 
 **Email Tool** (One-way):
 ```python
-email_tool(subject: str, body: str, to: str = "26442779@qq.com") -> str
+email_tool(subject: str, body: str, to: str = "default@example.com") -> str
 ```
 
 **Telegram Tool** (Bidirectional):
