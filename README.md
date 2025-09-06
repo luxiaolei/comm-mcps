@@ -18,9 +18,9 @@ A comprehensive Model Context Protocol (MCP) server that provides email, Telegra
 pip install git+https://github.com/luxiaolei/comm-mcps.git
 ```
 
-### Method 2: Install from PyPI
+### Method 2: Update/Reinstall
 ```bash
-pip install comm-mcps
+pip install --upgrade git+https://github.com/luxiaolei/comm-mcps.git
 ```
 
 ### Method 3: Development Setup
